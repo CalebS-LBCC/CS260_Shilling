@@ -1,7 +1,11 @@
 #include <stdlib.h>
 #include "node.h"
 
-
+/**
+ * @brief A linked queue class with basic memory management.
+ * @author Caleb Shilling
+ * @date 1/20/2021
+ */ 
 template<typename T>
 class LinkedQueue{
 public:
@@ -19,14 +23,12 @@ public:
         if(size == 0){
             start_node = (struct Node<T>*)std::malloc(sizeof(Node<T>));
             (start_node)->value = input_value;
-            size++;
-            return;
-        }
-
-        to(size-1);
-        struct Node<T>* new_node = (struct Node<T>*)std::malloc(sizeof(struct Node<T>));
-        new_node->value = input_value;
-        current_node->next_node = new_node;
+        }else{
+            to(size-1);
+            struct Node<T>* new_node = (struct Node<T>*)std::malloc(sizeof(struct Node<T>));
+            new_node->value = input_value;
+            current_node->next_node = new_node;
+        }   
         size++;
     }
     /**
@@ -72,11 +74,10 @@ public:
 private:
     struct Node<T>* start_node;
     struct Node<T>* current_node;
-
     /**
      * Sets the current node to the node at the specified index.
      * 
-     * 
+     * @param pos   The index to move to.
      */ 
     void to(int pos){
         current_node = start_node;
