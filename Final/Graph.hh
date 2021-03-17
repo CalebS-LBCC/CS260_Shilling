@@ -1,10 +1,22 @@
 #include "Node.hh"
 #include <algorithm>
+
+/**
+ * A graph which can process bidirectional edges and return the
+ * shortest path between two points and the minimal spanning tree
+ * of the graph.
+ * 
+ * @author Caleb Shilling
+ * @date 3-17-2021
+ */
 class Graph{
-public:
-    
+public: 
     /**
      * Constructor for the Graph class.
+     * 
+     * I decided to have the program initalize with a node to
+     * prevent errors when performing Prim's or Dijikstra's
+     * algorithms.
      * 
      * @param init_name Name of the root node in the graph
      */
@@ -16,6 +28,10 @@ public:
 
     /**
      * Add a node to the graph.
+     * 
+     * The program first checks if the node is already present.
+     * If it is, the node is not added. If it does not exist in
+     * the graph, the node is added.
      * 
      * @param node_name The name of the node to be added
      * @return          Return a 1 if the node was added, 0 otherwise
@@ -34,6 +50,15 @@ public:
 
     /**
      * Adds an edge to the graph between two nodes.
+     * 
+     * This is a bidirectional edge. Adding a directional edge
+     * is possible with a few modifications to Prim's and Dikijstra's
+     * to support it.
+     * 
+     * This function first ensures both nodes are in the graph and
+     * makes note of their positions. Once this is done, the length
+     * of each edge and the other node is added to each node, allowing
+     * access to one node using the other and vice versa.
      * 
      * @param node_1    A node the edge will connect
      * @param node_2    A node the edge will connect
@@ -80,6 +105,23 @@ public:
 
     /**
      * Algorithm for determining the shortest path between nodes.
+     * 
+     * The program first ensures both nodes are in the graph. Then, the source
+     * node is added to the queue. The following runs looped:
+     * 
+     * The node with the smallest distance is taken from the queue. The node is then
+     * scanned for children. If there are children, each child is checked if it is visited
+     * or if the child is already in the queue. If the child is visited, it is skipped. If
+     * the child is not in the queue, it is added with the distance from the source to that
+     * node. If it is in the queue, the node's distance is modified if the distance through
+     * the parent node is shorter than what is currently listed.
+     * 
+     * This is ran until the destination node is encountered or the queue ends. If the
+     * destination node is not in the queue, the program returns a nullptr. If it is,
+     * that node must be the current node. The distance to that node is saved. In order
+     * to get the path, which is an int vector, the current node's name is added to the
+     * front of the vector. Then, the parent is accessed and the cycle repeats until there
+     * is no parent of the current vector, which must be the source.
      * 
      * @param source        The name of the node to start at
      * @param destination   The name of the node to end at
@@ -190,6 +232,20 @@ public:
 
     /**
      * Returns the Minimum Spanning Tree of the graph.
+     * 
+     * The program first ensures both nodes are in the graph. Then, the source
+     * node is added to the queue. The following runs looped:
+     * 
+     * The node who is the shortest distance from its parent is selected from the queue. This node
+     * is then added a new graph with an edge connecting it with its parent. The node is then
+     * scanned for children. If there are children, each child is checked if it is visited
+     * or if the child is already in the queue. If the child is visited, it is skipped. If
+     * the child is not in the queue, it is added with the distance from the current node to that
+     * node. If it is in the queue, the node's distance is modified if the distance from
+     * the parent node is shorter than what is currently listed.
+     * 
+     * This is ran until the queue is empty. If not all nodes are visited, null values are returned.
+     * If all nodes are visited, the new graph is returned alongside the sum of all edges.
      * 
      * @return  The graph containing the MST of this graph.
      */
