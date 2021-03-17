@@ -123,6 +123,9 @@ public:
      * front of the vector. Then, the parent is accessed and the cycle repeats until there
      * is no parent of the current vector, which must be the source.
      * 
+     * See "Algorithm":
+     * https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm 
+     * 
      * @param source        The name of the node to start at
      * @param destination   The name of the node to end at
      * @return              The length of the path and a vector containing the path
@@ -168,6 +171,7 @@ public:
 
                 // Ensure the child being observed isn't visited
                 if(std::find(visited.begin(), visited.end(), child_node->name) == visited.end()){
+                    //https://stackoverflow.com/questions/571394/how-to-find-out-if-an-item-is-present-in-a-stdvector
                     
                     // Determine if the child is already in the queue
                     ShortStruct* child = nullptr;
